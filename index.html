@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIWES Technical Report Defense • Oluwademilade Faminu</title>
+  <meta name="description" content="SIWES Technical Report Defense Presentation by Oluwademilade Faminu (BU23MCT1003) - Mechatronics Engineering, Bowen University at RAIN Ibadan.">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Typography: Playfair Display (Headings), DM Sans (Body), JetBrains Mono (Specs) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"DM Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            neutral: {
+              50: '#F9FAFB',
+              100: '#F3F4F6',
+              200: '#E5E7EB',
+              300: '#D1D5DB',
+              400: '#9CA3AF',
+              500: '#6B7280',
+              600: '#4B5563',
+              700: '#374151',
+              800: '#1F2937',
+              900: '#111827',
+              950: '#030712',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* STRICT LECTURER RULE: No grayscale filters on any images! */
+    img, picture, svg.color-diagram {
+      filter: none !important;
+      -webkit-filter: none !important;
+    }
+
+    /* Custom scrollbar for minimalist monochrome aesthetic */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F3F4F6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #9CA3AF;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4B5563;
+    }
+
+    /* Slide transition animations */
+    .slide-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    }
+    .slide-panel.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Print media styling for export */
+    @media print {
+      body {
+        background: #ffffff !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .slide-panel {
+        display: flex !important;
+        opacity: 1 !important;
+        page-break-after: always;
+        min-height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#F8F9FA] text-black font-sans min-h-screen flex flex-col justify-between selection:bg-black selection:text-white antialiased overflow-x-hidden">
+
+  <!-- TOP PROGRESS BAR & HEADER -->
+  <header class="w-full bg-white border-b border-neutral-300 sticky top-0 z-40 select-none no-print">
+    <!-- Active Progress Bar -->
+    <div class="w-full bg-neutral-200 h-1">
+      <div id="progress-bar" class="bg-black h-1 transition-all duration-300 ease-out" style="width: 12.5%;"></div>
+    </div>
+
+    <!-- Header Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-black text-white tracking-widest uppercase">
+          SIWES '26
+        </span>
+        <div class="h-4 w-px bg-neutral-300 hidden sm:block"></div>
+        <div class="text-xs font-mono font-medium text-neutral-600 hidden sm:block">
+          RAIN IBADAN <span class="text-neutral-400">•</span> DEFENSE DECK
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="text-xs font-mono text-neutral-600 text-right">
+          <span class="font-bold text-black">Oluwademilade Faminu</span>
+          <span class="text-neutral-400 hidden md:inline">• BU23MCT1003</span>
+        </div>
+        <button id="btn-fullscreen" title="Toggle Fullscreen (F)" class="p-1.5 rounded border border-neutral-300 text-neutral-700 hover:text-black hover:border-black hover:bg-neutral-100 transition text-xs font-mono flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+          </svg>
+          <span class="hidden md:inline">Fullscreen</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN SLIDES CONTAINER -->
+  <main class="flex-grow flex items-center justify-center py-4 sm:py-6 px-3 sm:px-6 lg:px-8 max-w-7xl w-full mx-auto">
+
+    <!-- ==========================================
+         SLIDE 1: TITLE SLIDE
+         ========================================== -->
+    <section id="slide-1" class="slide-panel active w-full flex-col lg:flex-row items-center gap-8 lg:gap-12 bg-white rounded-2xl border border-neutral-300 p-6 sm:p-10 lg:p-12 shadow-sm">
+      <!-- Left: Title Content -->
+      <div class="w-full lg:w-7/12 flex flex-col justify-between space-y-6">
+        <div>
+          <!-- Department Tag -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-300 bg-neutral-100 text-xs font-mono uppercase tracking-widest text-neutral-800 font-semibold mb-4">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            Mechatronics Engineering • 300 Level
+          </div>
+          
+          <!-- Presentation Title -->
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-black tracking-tight text-black leading-[1.1] mb-4">
+            SIWES Technical<br/>Report Defense
+          </h1>
+          <p class="text-base sm:text-lg text-neutral-600 font-sans leading-relaxed max-w-xl">
+            A comprehensive appraisal of industrial experience in robotic design, closed-loop feedback systems, embedded control, and automated fabrication.
+          </p>
+        </div>
+
+        <!-- Student & Defense Metadata Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-neutral-200">
+          <div class="p-3.5 bg-neutral-50 rounded-xl border border-neutral-200">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 font-semibold">Presenter / Candidate</div>
+            <div class="text-sm font-bold text-black mt-0.5">Oluwademilade Faminu</div>
+            <div class="text-xs font-mono text-neutral-600">Matric: BU23MCT1003</div>
+          </div>
+
+          <div class="p-3.5 bg-neutral-50 rounded-xl border border-neutral-200">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 font-semibold">Host Organization</div>
+            <div class="text-sm font-bold text-black mt-0.5">RAIN Ibadan</div>
+            <div class="text-xs text-neutral-600">Robotics &amp; Artificial Intelligence Nigeria</div>
+          </div>
+
+          <div class="p-3.5 bg-neutral-50 rounded-xl border border-neutral-200">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 font-semibold">Training Duration</div>
+            <div class="text-sm font-bold text-black mt-0.5">10 Weeks Intensive</div>
+            <div class="text-xs font-mono text-neutral-600">2025/2026 Academic Session</div>
+          </div>
+
+          <div class="p-3.5 bg-neutral-50 rounded-xl border border-neutral-200">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 font-semibold">Academic Institution</div>
+            <div class="text-sm font-bold text-black mt-0.5">Bowen University</div>
+            <div class="text-xs text-neutral-600">College of Computing &amp; Engineering</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Full Color Image (No Grayscale!) -->
+      <div class="w-full lg:w-5/12 flex justify-center">
+        <div class="relative w-full max-w-md rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-md bg-neutral-100 group">
+          <img 
+            src="assets/EsoPhotography-163.jpg" 
+            alt="Oluwademilade Faminu - SIWES Technical Defense" 
+            class="w-full h-[400px] sm:h-[480px] object-cover object-top transition duration-500 group-hover:scale-[1.02]"
+            loading="eager"
+          />
+          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 text-white">
+            <div class="text-xs font-mono uppercase tracking-wider text-neutral-300">Student Presenter</div>
+            <div class="text-sm font-bold">Oluwademilade Faminu</div>
+            <div class="text-[11px] text-neutral-300 font-mono">Mechatronics Intern • RAIN Ibadan</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 2: THE ORGANIZATION & OBJECTIVE
+         ========================================== -->
+    <section id="slide-2" class="slide-panel w-full flex-col lg:flex-row items-center gap-8 lg:gap-12 bg-white rounded-2xl border border-neutral-300 p-6 sm:p-10 lg:p-12 shadow-sm">
+      <!-- Left Content -->
+      <div class="w-full lg:w-7/12 space-y-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-300 bg-neutral-100 text-xs font-mono uppercase tracking-widest text-neutral-800 font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            Slide 02 • Institutional Profile
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-black tracking-tight text-black leading-tight">
+            The Host Organization &amp; Mission Objective
+          </h2>
+        </div>
+
+        <div class="space-y-4">
+          <!-- The Company Card -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50/80">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-black text-white">THE COMPANY</span>
+              <h3 class="font-bold text-base text-black">RAIN Ibadan</h3>
+            </div>
+            <p class="text-neutral-700 text-sm leading-relaxed">
+              A premier robotics and artificial intelligence research institution, training campus, and state-of-the-art digital fabrication laboratory based in Ibadan, Nigeria. Dedicated to native capacity building, AI development, and industrial automation.
+            </p>
+          </div>
+
+          <!-- Department Card -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50/80">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-neutral-800 text-white">DEPARTMENT</span>
+              <h3 class="font-bold text-base text-black">Robot Development and Automation (RDA)</h3>
+            </div>
+            <p class="text-neutral-700 text-sm leading-relaxed">
+              Tasked with electromechanical chassis design, PCB schematic routing, sensor fusion, motor drive integration, and embedded firmware deployment for indigenous mobile robots and manipulators.
+            </p>
+          </div>
+
+          <!-- Objective Card -->
+          <div class="p-4 rounded-xl border-2 border-black bg-white">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-black text-white">PRIMARY OBJECTIVE</span>
+              <h3 class="font-bold text-base text-black">Theory-to-Industry Integration</h3>
+            </div>
+            <p class="text-neutral-800 text-sm font-medium leading-relaxed">
+              Systematically bridge theoretical university mechatronics coursework with rigorous, physical, industrial-grade applications and system integration standards.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Full Color Image (No Grayscale!) -->
+      <div class="w-full lg:w-5/12 flex flex-col items-center">
+        <div class="w-full rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-md bg-neutral-100 group">
+          <img 
+            src="assets/EsoPhotography-130.jpg" 
+            alt="RAIN Ibadan Robotics Laboratory showing workstations and robot chassis" 
+            class="w-full h-[320px] sm:h-[400px] object-cover transition duration-500 group-hover:scale-[1.02]"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-xs font-mono text-neutral-500 mt-2 text-center">
+          Fig 2.1: RAIN Research &amp; Prototyping Laboratory (Chassis &amp; Workstations)
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 3: OPERATIONAL SCOPE
+         ========================================== -->
+    <section id="slide-3" class="slide-panel w-full flex-col lg:flex-row items-center gap-8 lg:gap-12 bg-white rounded-2xl border border-neutral-300 p-6 sm:p-10 lg:p-12 shadow-sm">
+      <!-- Left Content: Bento Layout -->
+      <div class="w-full lg:w-7/12 space-y-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-300 bg-neutral-100 text-xs font-mono uppercase tracking-widest text-neutral-800 font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            Slide 03 • Daily Operations
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-black tracking-tight text-black leading-tight">
+            Operational Scope, Machinery &amp; Tech Stack
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1">
+          <!-- Column 1: Duties -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50 flex flex-col justify-between">
+            <div>
+              <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 font-bold mb-2">ENGINEERING DUTIES</div>
+              <ul class="text-xs sm:text-sm text-neutral-800 space-y-2 font-medium">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black font-bold">▪</span> Product Design
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black font-bold">▪</span> Control Engineering
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black font-bold">▪</span> Embedded Systems
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black font-bold">▪</span> Physical Fabrication
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black font-bold">▪</span> IoT Dashboards
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Column 2: Machinery -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50 flex flex-col justify-between">
+            <div>
+              <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 font-bold mb-2">FABRICATION TOOLS</div>
+              <ul class="text-xs sm:text-sm text-neutral-800 space-y-2 font-medium">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black font-bold">▪</span> 3D Printers (FDM)
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black font-bold">▪</span> Laser Cutters
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black font-bold">▪</span> Spot Welders
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black font-bold">▪</span> Soldering Stations
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Column 3: Tech Stack -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50 flex flex-col justify-between">
+            <div>
+              <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 font-bold mb-2">TECH &amp; PROTOCOLS</div>
+              <ul class="text-xs sm:text-sm font-mono text-neutral-800 space-y-2">
+                <li class="flex items-start gap-1.5 font-bold">
+                  <span class="text-black">▪</span> C / C++
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black">▪</span> Python / FastAPI
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black">▪</span> MQTT Protocol
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black">▪</span> SQLite Storage
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-black">▪</span> Git / GitHub
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3 bg-neutral-100 rounded-lg border border-neutral-300 text-xs font-mono text-neutral-700">
+          <span class="font-bold text-black">Cross-Functional Integration:</span> CAD modeling in Fusion 360 directly fed into slicing and additive fabrication, synchronized with C++ firmware and real-time Python/MQTT telemetry.
+        </div>
+      </div>
+
+      <!-- Right: Full Color Image (No Grayscale!) -->
+      <div class="w-full lg:w-5/12 flex flex-col items-center">
+        <div class="w-full rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-md bg-neutral-100 group">
+          <img 
+            src="assets/EsoPhotography-38.jpg" 
+            alt="Creality and Elegoo 3D Printers in the RAIN digital fabrication laboratory" 
+            class="w-full h-[320px] sm:h-[420px] object-cover transition duration-500 group-hover:scale-[1.02]"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-xs font-mono text-neutral-500 mt-2 text-center">
+          Fig 3.1: Additive Manufacturing Suite (Creality &amp; Elegoo 3D Printers)
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 4: FOCAL PROJECT (1-DOF PID ROBOTIC JOINT)
+         ========================================== -->
+    <section id="slide-4" class="slide-panel w-full flex-col lg:flex-row items-center gap-8 lg:gap-10 bg-white rounded-2xl border border-neutral-300 p-6 sm:p-10 lg:p-12 shadow-sm">
+      <!-- Left Content -->
+      <div class="w-full lg:w-6/12 space-y-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-300 bg-neutral-100 text-xs font-mono uppercase tracking-widest text-neutral-800 font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            Slide 04 • Focal Engineering Project
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-black tracking-tight text-black leading-tight">
+            1-DOF PID Robotic Joint Implementation
+          </h2>
+          <p class="text-sm text-neutral-600 mt-1 font-sans">
+            Precision angular control architecture incorporating real-time telemetry and algorithmic disturbance rejection.
+          </p>
+        </div>
+
+        <div class="space-y-3.5">
+          <!-- Hardware Specs -->
+          <div class="p-3.5 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-mono font-bold text-black uppercase">Hardware Subsystems</span>
+              <span class="text-[10px] font-mono bg-neutral-200 px-2 py-0.5 rounded">Core Setup</span>
+            </div>
+            <p class="text-xs sm:text-sm text-neutral-800 leading-relaxed font-sans">
+              Driven by an <strong>Arduino Uno (ATmega328P)</strong>, interfacing a <strong>5x4 Matrix Keypad</strong> for operator target inputs, an <strong>L298N Dual H-Bridge</strong> power stage, and a <strong>12V DC Gearmotor</strong> with active inductive snubber protection.
+            </p>
+          </div>
+
+          <!-- Closed Loop Telemetry -->
+          <div class="p-3.5 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-mono font-bold text-black uppercase">Closed-Loop Feedback</span>
+              <span class="text-[10px] font-mono bg-neutral-900 text-white px-2 py-0.5 rounded">2.75 pulses/deg</span>
+            </div>
+            <p class="text-xs sm:text-sm text-neutral-800 leading-relaxed font-sans">
+              Incorporates a <strong>Hall Effect quadrature encoder</strong> measuring continuous displacement at <strong>2.75 pulses/degree</strong>, enabling sub-degree angular telemetry and dynamic error correction: <code class="bg-neutral-200 px-1 rounded font-mono text-[11px]">e(t) = Setpoint - Actual</code>.
+            </p>
+          </div>
+
+          <!-- Software Calibration -->
+          <div class="p-3.5 rounded-xl border-2 border-black bg-white">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-mono font-bold text-black uppercase">Software-Based Calibration</span>
+              <span class="text-[10px] font-mono font-bold bg-black text-white px-2 py-0.5 rounded">Zero-Limit Hack</span>
+            </div>
+            <p class="text-xs sm:text-sm text-neutral-900 leading-relaxed font-medium">
+              Replaced physical limit switches with an innovative firmware <strong>"Jog Mode"</strong> calibration routine, eliminating mechanical switch bounce, contact wear, and spatial assembly constraints.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Full Color Vector Diagram (No Grayscale!) -->
+      <div class="w-full lg:w-6/12 flex flex-col items-center">
+        <div class="w-full rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-md bg-white p-2">
+          <img 
+            src="assets/system_block_diagram.svg" 
+            alt="1-DOF PID Closed Loop Control Architecture Diagram" 
+            class="w-full h-auto max-h-[380px] object-contain"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-xs font-mono text-neutral-500 mt-2 text-center">
+          Fig 4.1: Closed-Loop Control System Block Diagram (Setpoint → Controller → Plant → Feedback)
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 5: COMPETENCIES ACQUIRED
+         ========================================== -->
+    <section id="slide-5" class="slide-panel w-full flex-col lg:flex-row items-center gap-8 lg:gap-12 bg-white rounded-2xl border border-neutral-300 p-6 sm:p-10 lg:p-12 shadow-sm">
+      <!-- Left Content -->
+      <div class="w-full lg:w-7/12 space-y-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-300 bg-neutral-100 text-xs font-mono uppercase tracking-widest text-neutral-800 font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            Slide 05 • Skill Acquisition
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-black tracking-tight text-black leading-tight">
+            Key Engineering Competencies Acquired
+          </h2>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Pillar 1: Control Systems -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center font-mono text-xs font-bold">1</span>
+              <h3 class="font-bold text-base text-black">Control Systems &amp; Dynamics</h3>
+            </div>
+            <p class="text-neutral-700 text-xs sm:text-sm leading-relaxed pl-8">
+              Mastered PID control mathematics (<span class="font-mono font-semibold">Kp, Ki, Kd</span> parameter tuning), transient response management, steady-state error elimination, and rotational momentum management during rapid deceleration.
+            </p>
+          </div>
+
+          <!-- Pillar 2: Fabrication -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center font-mono text-xs font-bold">2</span>
+              <h3 class="font-bold text-base text-black">Digital Fabrication &amp; Prototyping</h3>
+            </div>
+            <p class="text-neutral-700 text-xs sm:text-sm leading-relaxed pl-8">
+              Seamless translation from <strong>Autodesk Fusion 360</strong> CAD modeling to physical additive manufacturing (slicing infills, shell thickness, PLA/PETG structural tolerance) and subtractive laser cutting.
+            </p>
+          </div>
+
+          <!-- Pillar 3: IoT -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center font-mono text-xs font-bold">3</span>
+              <h3 class="font-bold text-base text-black">IoT Architecture &amp; Telemetry</h3>
+            </div>
+            <p class="text-neutral-700 text-xs sm:text-sm leading-relaxed pl-8">
+              Constructed high-speed asynchronous backends using <strong>Python &amp; FastAPI</strong>, implementing lightweight <strong>MQTT</strong> pub/sub brokers for streaming real-time joint angular coordinates to browser dashboards.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Full Color Image (No Grayscale!) -->
+      <div class="w-full lg:w-5/12 flex flex-col items-center">
+        <div class="w-full rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-md bg-neutral-100 group">
+          <img 
+            src="assets/IMG_6146 - Copy.jpg" 
+            onerror="this.onerror=null; this.src='assets/IMG_6146 - Copy.PNG';"
+            alt="Mechanical chassis assembly showing 3D printed parts and mechanical mounting" 
+            class="w-full h-[320px] sm:h-[400px] object-cover transition duration-500 group-hover:scale-[1.02]"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-xs font-mono text-neutral-500 mt-2 text-center">
+          Fig 5.1: Mechanical Robotic Chassis Assembly &amp; Physical Rigging
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 6: FAULT DIAGNOSIS & TROUBLESHOOTING
+         ========================================== -->
+    <section id="slide-6" class="slide-panel w-full flex-col lg:flex-row items-center gap-8 lg:gap-12 bg-white rounded-2xl border border-neutral-300 p-6 sm:p-10 lg:p-12 shadow-sm">
+      <!-- Left Content -->
+      <div class="w-full lg:w-7/12 space-y-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-300 bg-neutral-100 text-xs font-mono uppercase tracking-widest text-neutral-800 font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            Slide 06 • Diagnostic Engineering
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-black tracking-tight text-black leading-tight">
+            Fault Diagnosis &amp; Root Cause Remediation
+          </h2>
+          <p class="text-sm text-neutral-600 mt-1">
+            Systematic troubleshooting protocols deployed to resolve critical electrical and mechanical failure modes.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Case 1 -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-neutral-900 text-white">CHALLENGE 01</span>
+              <span class="text-xs font-mono text-neutral-600">Electrical Subsystem</span>
+            </div>
+            <div class="text-sm font-bold text-black mb-1">Unidirectional Motor Fault (Blown BTS7960 Driver)</div>
+            <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed mb-2">
+              <strong>Observation:</strong> Actuator operated strictly clockwise; counter-clockwise switching triggered immediate voltage collapse and thermal runaway.
+            </p>
+            <div class="p-2.5 bg-white rounded-lg border border-neutral-200 text-xs text-neutral-800">
+              <span class="font-bold text-black font-mono">SOLUTION:</span> Traced gate continuity with a digital multimeter, confirmed blown high-side MOSFET on the BTS7960 module, and safely swapped to an isolated L298N driver with flyback diode protection.
+            </div>
+          </div>
+
+          <!-- Case 2 -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-neutral-900 text-white">CHALLENGE 02</span>
+              <span class="text-xs font-mono text-neutral-600">Mechanical Subsystem</span>
+            </div>
+            <div class="text-sm font-bold text-black mb-1">High-Torque Mechanical Coupling Slip</div>
+            <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed mb-2">
+              <strong>Observation:</strong> Under rapid PID reversals, the motor D-shaft experienced rotational slip against the 3D-printed PLA joint bore, corrupting encoder telemetry.
+            </p>
+            <div class="p-2.5 bg-white rounded-lg border border-neutral-200 text-xs text-neutral-800">
+              <span class="font-bold text-black font-mono">SOLUTION:</span> Fabricated a chemically hardened composite hub with reinforced grub-screw seating, eliminating rotational backlash and locking the shaft firmly under peak torque.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Full Color Image (No Grayscale!) -->
+      <div class="w-full lg:w-5/12 flex flex-col items-center">
+        <div class="w-full rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-md bg-neutral-100 group">
+          <img 
+            src="assets/IMG_6148 - Copy.jpg" 
+            onerror="this.onerror=null; this.src='assets/IMG_6148 - Copy.PNG';"
+            alt="Inspecting jumper wires, matrix keypad, and circuit connections on breadboard" 
+            class="w-full h-[320px] sm:h-[420px] object-cover transition duration-500 group-hover:scale-[1.02]"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-xs font-mono text-neutral-500 mt-2 text-center">
+          Fig 6.1: Signal Tracing &amp; Keypad Jumper Harness Diagnosis
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 7: THEORY TO PRACTICE
+         ========================================== -->
+    <section id="slide-7" class="slide-panel w-full flex-col lg:flex-row items-center gap-8 lg:gap-12 bg-white rounded-2xl border border-neutral-300 p-6 sm:p-10 lg:p-12 shadow-sm">
+      <!-- Left Content -->
+      <div class="w-full lg:w-7/12 space-y-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-300 bg-neutral-100 text-xs font-mono uppercase tracking-widest text-neutral-800 font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            Slide 07 • Academic Synthesis
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-black tracking-tight text-black leading-tight">
+            Bridging Theory to Industrial Practice
+          </h2>
+          <p class="text-sm text-neutral-600 mt-1">
+            Translating mathematical derivations into resilient physical machines.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Item 1 -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-black text-white">01</span>
+              <h3 class="font-bold text-base text-black">Academic Application in Real Systems</h3>
+            </div>
+            <p class="text-neutral-700 text-xs sm:text-sm leading-relaxed">
+              Mapped theoretical Laplace-domain control equations and university circuit analysis directly into firmware algorithms running in discrete time (<span class="font-mono font-semibold">Δt = 10ms</span>) on low-power microcontrollers.
+            </p>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-black text-white">02</span>
+              <h3 class="font-bold text-base text-black">Electrical Isolation &amp; Hazard Mitigation</h3>
+            </div>
+            <p class="text-neutral-700 text-xs sm:text-sm leading-relaxed">
+              Applied industrial protection techniques including galvanic optocoupling, back-EMF suppression snubbers, and common-ground decoupling to safeguard sensitive logic against inductive motor kicks.
+            </p>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="p-4 rounded-xl border-2 border-black bg-white">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-black text-white">03</span>
+              <h3 class="font-bold text-base text-black">Systems-Level Thinking across the Lifecycle</h3>
+            </div>
+            <p class="text-neutral-900 text-xs sm:text-sm font-medium leading-relaxed">
+              Evolved beyond isolated coding into full systems-level engineering: uniting <strong>CAD Design → Slicing &amp; Fabrication → Hardware Wiring → Embedded Firmware → Algorithmic PID Tuning</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Full Color Image (No Grayscale!) -->
+      <div class="w-full lg:w-5/12 flex flex-col items-center">
+        <div class="w-full rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-md bg-neutral-100 group">
+          <img 
+            src="assets/EsoPhotography-41.jpg" 
+            alt="Students collaborating with laptops and workstations inside RAIN training facility" 
+            class="w-full h-[320px] sm:h-[400px] object-cover transition duration-500 group-hover:scale-[1.02]"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-xs font-mono text-neutral-500 mt-2 text-center">
+          Fig 7.1: Collaborative Mechatronics Engineering &amp; Firmware Review
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 8: RECOMMENDATIONS & CONCLUSION
+         ========================================== -->
+    <section id="slide-8" class="slide-panel w-full flex-col lg:flex-row items-center gap-8 lg:gap-12 bg-white rounded-2xl border border-neutral-300 p-6 sm:p-10 lg:p-12 shadow-sm">
+      <!-- Left Content -->
+      <div class="w-full lg:w-7/12 space-y-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-300 bg-neutral-100 text-xs font-mono uppercase tracking-widest text-neutral-800 font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            Slide 08 • Strategic Appraisal
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-black tracking-tight text-black leading-tight">
+            Recommendations &amp; Defense Conclusion
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- To RAIN -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-black text-white">TO RAIN IBADAN</span>
+            </div>
+            <ul class="text-xs sm:text-sm text-neutral-800 space-y-2">
+              <li class="flex items-start gap-1.5">
+                <span class="text-black font-bold">▪</span> Expand high-current motor driver inventory (MOSFET H-bridges).
+              </li>
+              <li class="flex items-start gap-1.5">
+                <span class="text-black font-bold">▪</span> Establish pre-calibrated test benches for sensor characterization.
+              </li>
+            </ul>
+          </div>
+
+          <!-- To Bowen -->
+          <div class="p-4 rounded-xl border border-neutral-300 bg-neutral-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-black text-white">TO BOWEN UNIVERSITY</span>
+            </div>
+            <ul class="text-xs sm:text-sm text-neutral-800 space-y-2">
+              <li class="flex items-start gap-1.5">
+                <span class="text-black font-bold">▪</span> Integrate Python/MQTT telemetry modules into the undergraduate curriculum.
+              </li>
+              <li class="flex items-start gap-1.5">
+                <span class="text-black font-bold">▪</span> Expand student lab access to rapid prototyping &amp; 3D printing equipment.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Conclusion Banner -->
+        <div class="p-5 rounded-xl border-2 border-black bg-neutral-900 text-white">
+          <div class="text-[11px] font-mono uppercase tracking-widest text-neutral-400 font-bold mb-1">DEFENSE SUMMARY &amp; IMPACT</div>
+          <p class="text-sm sm:text-base font-serif font-medium leading-relaxed text-neutral-100">
+            "The 10-week SIWES industrial internship at RAIN Ibadan successfully solidified theoretical engineering principles, equipping me with industry-grade diagnostic, design, and practical systems-engineering competencies essential for a professional career in Mechatronics and Robotics."
+          </p>
+          <div class="mt-3 flex items-center justify-between text-xs font-mono text-neutral-400 pt-2 border-t border-neutral-800">
+            <span>Oluwademilade Faminu • BU23MCT1003</span>
+            <span>Mechatronics Engineering</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Full Color Image (No Grayscale!) -->
+      <div class="w-full lg:w-5/12 flex flex-col items-center">
+        <div class="w-full rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-md bg-neutral-100 group">
+          <img 
+            src="assets/EsoPhotography-144.jpg" 
+            alt="Wide group photo taken outside with the banner and dignitaries at RAIN Ibadan" 
+            class="w-full h-[320px] sm:h-[400px] object-cover transition duration-500 group-hover:scale-[1.02]"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-xs font-mono text-neutral-500 mt-2 text-center">
+          Fig 8.1: SIWES Cohort, Instructors &amp; Dignitaries at RAIN Ibadan
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       BOTTOM NAVIGATION & CONTROLS DOCK
+       ========================================== -->
+  <footer class="w-full bg-white border-t border-neutral-300 py-3 px-4 sm:px-6 lg:px-8 select-none no-print sticky bottom-0 z-40">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      
+      <!-- Left: Slide Number & Status -->
+      <div class="flex items-center gap-3">
+        <span id="slide-indicator" class="font-mono text-xs sm:text-sm font-bold tracking-widest text-black bg-neutral-100 px-2.5 py-1 rounded border border-neutral-300">
+          SLIDE 01 / 08
+        </span>
+        <span id="slide-name" class="text-xs font-mono text-neutral-500 hidden md:inline truncate max-w-xs">
+          Title Slide
+        </span>
+      </div>
+
+      <!-- Center: Direct Slide Jump Pills (1 - 8) -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button onclick="goToSlide(1)" class="slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-black text-white" data-slide="1">1</button>
+        <button onclick="goToSlide(2)" class="slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300" data-slide="2">2</button>
+        <button onclick="goToSlide(3)" class="slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300" data-slide="3">3</button>
+        <button onclick="goToSlide(4)" class="slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300" data-slide="4">4</button>
+        <button onclick="goToSlide(5)" class="slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300" data-slide="5">5</button>
+        <button onclick="goToSlide(6)" class="slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300" data-slide="6">6</button>
+        <button onclick="goToSlide(7)" class="slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300" data-slide="7">7</button>
+        <button onclick="goToSlide(8)" class="slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300" data-slide="8">8</button>
+      </div>
+
+      <!-- Right: Prev / Next Buttons & Keyboard Hint -->
+      <div class="flex items-center gap-2">
+        <button 
+          id="btn-prev" 
+          onclick="prevSlide()" 
+          title="Previous Slide (← or PageUp)"
+          class="px-3.5 py-1.5 rounded-lg border border-neutral-300 font-mono text-xs font-bold text-neutral-700 hover:text-black hover:border-black hover:bg-neutral-100 transition disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1.5"
+          disabled
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+          <span>Prev</span>
+        </button>
+
+        <button 
+          id="btn-next" 
+          onclick="nextSlide()" 
+          title="Next Slide (→, Space, or PageDown)"
+          class="px-4 py-1.5 rounded-lg bg-black text-white font-mono text-xs font-bold hover:bg-neutral-800 transition disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1.5"
+        >
+          <span>Next</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT: SLIDE NAVIGATION & INTERACTION ENGINE -->
+  <script>
+    const TOTAL_SLIDES = 8;
+    let currentSlide = 1;
+
+    const slideNames = [
+      "Title Slide",
+      "The Organization & Objective",
+      "Operational Scope & Stack",
+      "1-DOF PID Robotic Joint",
+      "Key Competencies Acquired",
+      "Fault Diagnosis & Troubleshooting",
+      "Theory to Practice Integration",
+      "Recommendations & Conclusion"
+    ];
+
+    function updateView() {
+      // 1. Toggle active classes on slide elements
+      for (let i = 1; i <= TOTAL_SLIDES; i++) {
+        const slide = document.getElementById(`slide-${i}`);
+        if (slide) {
+          if (i === currentSlide) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        }
+      }
+
+      // 2. Update progress bar
+      const progressPercent = (currentSlide / TOTAL_SLIDES) * 100;
+      const progressBar = document.getElementById('progress-bar');
+      if (progressBar) {
+        progressBar.style.width = `${progressPercent}%`;
+      }
+
+      // 3. Update counter text
+      const indicator = document.getElementById('slide-indicator');
+      if (indicator) {
+        indicator.textContent = `SLIDE 0${currentSlide} / 0${TOTAL_SLIDES}`;
+      }
+
+      // 4. Update title hint
+      const nameElem = document.getElementById('slide-name');
+      if (nameElem) {
+        nameElem.textContent = slideNames[currentSlide - 1];
+      }
+
+      // 5. Update pill styles
+      document.querySelectorAll('.slide-pill').forEach(pill => {
+        const num = parseInt(pill.getAttribute('data-slide'), 10);
+        if (num === currentSlide) {
+          pill.className = "slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-black text-white";
+        } else {
+          pill.className = "slide-pill w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-mono text-xs font-bold transition flex items-center justify-center bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300";
+        }
+      });
+
+      // 6. Update prev/next button states
+      const prevBtn = document.getElementById('btn-prev');
+      const nextBtn = document.getElementById('btn-next');
+      if (prevBtn) prevBtn.disabled = (currentSlide === 1);
+      if (nextBtn) nextBtn.disabled = (currentSlide === TOTAL_SLIDES);
+
+      // 7. Update URL hash
+      if (window.location.hash !== `#slide-${currentSlide}`) {
+        history.replaceState(null, null, `#slide-${currentSlide}`);
+      }
+
+      // Scroll to top of window to avoid layout jumps
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= TOTAL_SLIDES) {
+        currentSlide = n;
+        updateView();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < TOTAL_SLIDES) {
+        currentSlide++;
+        updateView();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateView();
+      }
+    }
+
+    // Keyboard Navigation Listeners
+    window.addEventListener('keydown', (e) => {
+      // Don't intercept if user is typing in an input
+      if (['input', 'textarea'].includes(document.activeElement.tagName.toLowerCase())) {
+        return;
+      }
+
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+        case ' ': // Spacebar
+        case 'PageDown':
+          e.preventDefault();
+          nextSlide();
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+        case 'Backspace':
+        case 'PageUp':
+          e.preventDefault();
+          prevSlide();
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(1);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(TOTAL_SLIDES);
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        default:
+          // Number keys 1-8 for direct jump
+          const num = parseInt(e.key, 10);
+          if (!isNaN(num) && num >= 1 && num <= TOTAL_SLIDES) {
+            e.preventDefault();
+            goToSlide(num);
+          }
+          break;
+      }
+    });
+
+    // Fullscreen support
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn(`Fullscreen error: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFullscreen);
+
+    // Touch Swipe Support for Tablets / Mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    window.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const swipeDistance = touchEndX - touchStartX;
+      if (Math.abs(swipeDistance) > 50) {
+        if (swipeDistance < 0) {
+          nextSlide(); // Swiped left -> next
+        } else {
+          prevSlide(); // Swiped right -> prev
+        }
+      }
+    }
+
+    // Initialize from URL Hash on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#slide-')) {
+        const slideNum = parseInt(hash.replace('#slide-', ''), 10);
+        if (!isNaN(slideNum) && slideNum >= 1 && slideNum <= TOTAL_SLIDES) {
+          currentSlide = slideNum;
+        }
+      }
+      updateView();
+    });
+  </script>
+</body>
+</html>
